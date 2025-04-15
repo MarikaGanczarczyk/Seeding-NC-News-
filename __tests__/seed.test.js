@@ -6,7 +6,7 @@ beforeAll(() => seed(data));
 afterAll(() => db.end());
 
 describe('seed', () => {
-  describe('topics table', () => {
+  describe.only('topics table', () => {
     test('topics table exists', () => {
       return db
         .query(
@@ -81,7 +81,7 @@ describe('seed', () => {
     });
   });
 
-  describe('users table', () => {
+  describe.only('users table', () => {
     test('users table exists', () => {
       return db
         .query(
@@ -121,7 +121,7 @@ describe('seed', () => {
             WHERE tc.constraint_type = 'PRIMARY KEY'
             AND tc.table_name = 'users';`
         )
-        .then(({ rows: [{ column_name }] }) => {
+        .then(({ rows: [{ column_name }] }) => {//<< write your first query in here.
           expect(column_name).toBe('username');
         });
     });
@@ -155,7 +155,7 @@ describe('seed', () => {
     });
   });
 
-  describe('articles table', () => {
+  describe.only('articles table', () => {
     test('articles table exists', () => {
       return db
         .query(
