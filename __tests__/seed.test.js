@@ -5,8 +5,8 @@ const data = require('../db/data/test-data/index');
 beforeAll(() => seed(data));
 afterAll(() => db.end());
 
-describe('seed', () => {
-  describe.only('topics table', () => {
+describe.only('seed', () => {
+  describe('topics table', () => {
     test('topics table exists', () => {
       return db
         .query(
@@ -543,7 +543,7 @@ describe('seed', () => {
   });
 });
 
-describe('data insertion', () => {
+describe.only('data insertion', () => {
 
   test.only('topics data has been inserted correctly', () => {
     return db.query(`SELECT * FROM topics;`).then(({ rows: topics }) => {
@@ -586,6 +586,7 @@ describe('data insertion', () => {
   test.only('comments data has been inserted correctly', () => {
     return db.query(`SELECT * FROM comments;`).then(({ rows: comments }) => {
       expect(comments).toHaveLength(18);
+      
       comments.forEach((comment) => {
         expect(comment).toHaveProperty('comment_id');
         expect(comment).toHaveProperty('body');
@@ -593,6 +594,7 @@ describe('data insertion', () => {
         expect(comment).toHaveProperty('author');
         expect(comment).toHaveProperty('votes');
         expect(comment).toHaveProperty('created_at');
+        expect(typeof comment.article_id).toBe("number");
       });
     });
   });
