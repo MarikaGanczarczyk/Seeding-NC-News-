@@ -2,12 +2,13 @@ const db = require("../../db/connection");
 const endpoints = require("../../endpoints.json");
 
 const selectApi = () => {
-    return new Promise((resolve, reject) =>{
-        resolve(endpoints)
-    })
+  return endpoints
   
 };
+const selectTopics = () => {
+  return db.query("SELECT * FROM topics").then((result) => {
+    return result.rows;
+  });
+};
 
-
-
-module.exports = { selectApi };
+module.exports = { selectApi, selectTopics };
