@@ -32,8 +32,6 @@ describe("Incorrect path", () => {
       .get("/api/noexist")
       .expect(404)
       .then((response) => {
-        console.log(response.body.msg);
-
         expect(response.body.msg).toBe("Path not found");
       });
   });
@@ -80,19 +78,61 @@ describe("GET article by id", () => {
     return request(app)
       .get("/api/articles/notNum")
       .expect(400)
-      .then(({body: {msg}}) => {
-       
+      .then(({ body: { msg } }) => {
         expect(msg).toBe("Bad request");
       });
   });
-  test("404: article_id does not exist", ()=>{
+  test("404: article_id does not exist", () => {
     return request(app)
-    .get("/api/articles/1000")
-    .expect(404)
-    .then(({body: {msg}}) => {
-      
-      expect(msg).toBe("article id is not found");
-    });
-  }
-  )
+      .get("/api/articles/1000")
+      .expect(404)
+      .then(({ body: { msg } }) => {
+        expect(msg).toBe("article id is not found");
+      });
+  });
 });
+
+describe("GET articles", () => {
+  test("200: responds with all articles", () => {
+    return request(app).get("/api/articles").expect(200);
+  });
+  test("responds with an array containing all og the articles", () => {
+    return request(app)
+      .get("/api/articles")
+      .then(({ body: { articles } }) => {
+        console.log(articles, "hereeeee")
+        expect(Array.isArray(articles)).toBe(true);
+        expect(articles.length).toBe(13);
+        expect(articles[0] instanceof Object).toBe(true);
+        articles.forEach((article) => {
+          expect(article).toMatchObject({
+            article_id: expect.any(Number),
+            title: expect.any(String),
+            topic: expect.any(String),
+            author: expect.any(String),
+            created_at: expect.any(String),
+            votes: expect.any(Number),
+            article_img_url: expect.any(String),
+            comment_count: expect.any(String)
+          });
+          // expect(article).toBeSortedBy("created_at", {descending: true})
+        });
+      });
+  });
+  test("200: OK if sort_by query is created_at and is sorted correctly",()=>{
+    return request(app)
+    .get("/api/articles?sort_by=created_at")
+    .expect(200)
+    .then(({body: {articles}}) =>{
+      expect(articles).toBeSortedBy("created_at", {descending: true})
+    })
+  })
+//   test("400- Bad request when passed an ivalid path", () => {
+//     return request(app)
+//       .get("/api/articles?sort_by?created_at")
+//       .expect(400)
+//       .then(({ body: { msg } }) => {
+//         expect(msg).toBe("Bad request");
+//       });
+// });
+})
