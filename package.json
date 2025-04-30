@@ -11,6 +11,7 @@
     "start": "node listen.js",
     "test-seed": "jest seed.test.js",
     "test-app": "jest app.test.js"
+    
   },
   "repository": {
     "type": "git",
@@ -38,6 +39,7 @@
   "jest": {
     "setupFilesAfterEnv": [
       "jest-extended/all"
+      
     ]
   }
 }
