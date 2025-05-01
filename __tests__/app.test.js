@@ -100,7 +100,6 @@ describe("GET articles", () => {
     return request(app)
       .get("/api/articles")
       .then(({ body: { articles } }) => {
-        console.log(articles, "hereeeee")
         expect(Array.isArray(articles)).toBe(true);
         expect(articles.length).toBe(13);
         expect(articles[0] instanceof Object).toBe(true);
@@ -113,26 +112,62 @@ describe("GET articles", () => {
             created_at: expect.any(String),
             votes: expect.any(Number),
             article_img_url: expect.any(String),
-            comment_count: expect.any(String)
+            comment_count: expect.any(String),
           });
           // expect(article).toBeSortedBy("created_at", {descending: true})
         });
       });
   });
-  test("200: OK if sort_by query is created_at and is sorted correctly",()=>{
+  test("200: OK if sort_by query is created_at and is sorted correctly", () => {
     return request(app)
-    .get("/api/articles?sort_by=created_at")
-    .expect(200)
-    .then(({body: {articles}}) =>{
-      expect(articles).toBeSortedBy("created_at", {descending: true})
-    })
-  })
-//   test("400- Bad request when passed an ivalid path", () => {
-//     return request(app)
-//       .get("/api/articles?sort_by?created_at")
-//       .expect(400)
-//       .then(({ body: { msg } }) => {
-//         expect(msg).toBe("Bad request");
-//       });
-// });
-})
+      .get("/api/articles?sort_by=created_at")
+      .expect(200)
+      .then(({ body: { articles } }) => {
+        expect(articles).toBeSortedBy("created_at", { descending: true });
+      });
+  });
+  //   test("400- Bad request when passed an ivalid path", () => {
+  //     return request(app)
+  //       .get("/api/articles?sort_by?created_at")
+  //       .expect(400)
+  //       .then(({ body: { msg } }) => {
+  //         expect(msg).toBe("Bad request");
+  //       });
+  // });
+});
+describe("GET comments by article id", () => {
+  test("200 - responds with array of comments for given article_id", () => {
+    return request(app)
+      .get("/api/articles/1/comments")
+      .expect(200)
+      .then(({ body: { comments } }) => {
+        expect(comments).toBeSortedBy("created_at", { descending: true });
+        comments.forEach((comment) => {
+          expect(comment).toMatchObject({
+            comment_id: expect.any(Number),
+            votes: expect.any(Number),
+            created_at: expect.any(String),
+            author: expect.any(String),
+            body: expect.any(String),
+            article_id: 1,
+          });
+        });
+      });
+  });
+  test("404: article_id does not exist", () => {
+    return request(app)
+      .get("/api/articles/1000/comments")
+      .expect(404)
+      .then(({ body: { msg } }) => {
+        expect(msg).toBe("article id is not found");
+      });
+  });
+  test("400: responds with error if article_id is invalid", () => {
+    return request(app)
+      .get("/api/articles/notaNum/comments")
+      .expect(400)
+      .then(({ body: { msg } }) => {
+        expect(msg).toBe("Bad request");
+      });
+  });
+});
