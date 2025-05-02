@@ -5,12 +5,5 @@ app.listen(9090, ()=>{
 })
 
 const express = require("express");
-// const app = express();
-
-// // Middleware i endpointy tutaj
-
-// app.listen(3000, () => {
-//     console.log("Serwer działa na porcie 3000!");
-// });
 
 module.exports = app;
