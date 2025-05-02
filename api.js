@@ -2,7 +2,7 @@ const express = require("express");
 const db = require("./db/connection");
 const { getApi, getTopics } = require("./app/controllers/topics.controller");
 const {getArticlesID, getArticles,getCommentsByArticleId, patchArticles}= require("./app/controllers/articles.controller");
-const {postComment} = require("./app/controllers/comments.controller")
+const {postComment, deleteComment} = require("./app/controllers/comments.controller")
 const app = express();
 
 app.use(express.json());
@@ -20,10 +20,11 @@ app.get("/api/articles/:article_id/comments", getCommentsByArticleId)
 app.post("/api/articles/:article_id/comments", postComment)
 
 app.patch("/api/articles/:article_id", patchArticles)
+app.delete("/api/comments/:comment_id", deleteComment)
 
 
 app.all("/*splat", (req, res) => {
-    res.status(404).send({ msg: "Path not found" });
+    res.status(404).send({ msg: "Not Found" });
   });
 
 app.use((err, req, res, next) => {
