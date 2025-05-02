@@ -2,6 +2,7 @@ const express = require("express");
 const db = require("./db/connection");
 const { getApi, getTopics } = require("./app/controllers/topics.controller");
 const {getArticlesID, getArticles,getCommentsByArticleId }= require("./app/controllers/articles.controller");
+const {postComment} = require("./app/controllers/comments.controller")
 const app = express();
 
 app.use(express.json());
@@ -15,6 +16,8 @@ app.get("/api/articles/:article_id", getArticlesID);
 app.get("/api/articles", getArticles)
 
 app.get("/api/articles/:article_id/comments", getCommentsByArticleId)
+
+app.post("/api/articles/:article_id/comments", postComment)
 
 
 app.all("/*splat", (req, res) => {
