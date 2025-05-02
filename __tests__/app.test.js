@@ -233,3 +233,41 @@ describe("POST comments", () => {
       });
   });
 });
+describe("PATCH/api/articles/:article_id",()=>{
+  test("200: Responds with updated article ", ()=>{
+    return request(app)
+    .patch("/api/articles/3")
+    .send({ inc_votes: 1 })
+    .expect(200)
+    .then(({body}) => {
+      expect(body.article).toMatchObject({
+        article_id: 3,
+        title: expect.any(String),
+        topic: expect.any(String),
+        author: expect.any(String),
+        body: expect.any(String),
+        created_at: expect.any(String),
+        votes: 1,
+        article_img_url: expect.any(String)
+      })
+    })
+  })
+  test("404: responds with Not found if article_id doesn't exist", ()=>{
+    return request(app)
+    .patch("/api/articles/1000")
+    .send({inc_votes: 1})
+    .expect(404)
+    .then(({body})=>{
+      expect(body.msg).toBe("Not Found")
+    })
+  })
+  test("400: responds with bad request if invalid article_id", ()=>{
+    return request(app)
+    .patch("/api/articles/notNum")
+    .send({inc_votes: 1})
+    .expect(400)
+    .then(({body})=>{
+      expect(body.msg).toBe("Bad request")
+    })
+  })
+})
