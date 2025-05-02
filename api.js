@@ -1,7 +1,7 @@
 const express = require("express");
 const db = require("./db/connection");
 const { getApi, getTopics } = require("./app/controllers/topics.controller");
-const {getArticlesID, getArticles,getCommentsByArticleId }= require("./app/controllers/articles.controller");
+const {getArticlesID, getArticles,getCommentsByArticleId, patchArticles}= require("./app/controllers/articles.controller");
 const {postComment} = require("./app/controllers/comments.controller")
 const app = express();
 
@@ -18,6 +18,8 @@ app.get("/api/articles", getArticles)
 app.get("/api/articles/:article_id/comments", getCommentsByArticleId)
 
 app.post("/api/articles/:article_id/comments", postComment)
+
+app.patch("/api/articles/:article_id", patchArticles)
 
 
 app.all("/*splat", (req, res) => {
