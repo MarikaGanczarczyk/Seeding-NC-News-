@@ -114,7 +114,6 @@ describe("GET articles", () => {
             article_img_url: expect.any(String),
             comment_count: expect.any(String),
           });
-          // expect(article).toBeSortedBy("created_at", {descending: true})
         });
       });
   });
@@ -126,14 +125,7 @@ describe("GET articles", () => {
         expect(articles).toBeSortedBy("created_at", { descending: true });
       });
   });
-  //   test("400- Bad request when passed an ivalid path", () => {
-  //     return request(app)
-  //       .get("/api/articles?sort_by?created_at")
-  //       .expect(400)
-  //       .then(({ body: { msg } }) => {
-  //         expect(msg).toBe("Bad request");
-  //       });
-  // });
+
 });
 describe("GET comments by article id", () => {
   test("200 - responds with array of comments for given article_id", () => {
@@ -294,6 +286,35 @@ describe("DELETE /api/comments/:comment_id", ()=>{
         expect(body.msg).toBe("Not Found")
       })
 })
+})
+describe("GET api/users", ()=>{
+  test("200: responds with an array of users ojects", ()=>{
+    
+    
+    return request(app)
+    
+    .get("/api/users")
+    .expect(200)
+    .then(({body: { users }})=>{
+      expect(Array.isArray(users)).toBe(true)
+      expect(users.length).toBe(4)
+      users.forEach(user =>{
+        expect(user).toMatchObject({
+          username: expect.any(String),
+          name: expect.any(String),
+          avatar_url: expect.any(String)
+        })
+      })
+    })
+  })
+  test("404: responds with error if endpoints doesn't exist", ()=>{
+  return request(app)
+  .get("/api/noexist")
+  .expect(404)
+  .then(response =>{
+    expect(response.body.msg).toBe("Not Found")
+  })
+  })
 })
 
 
