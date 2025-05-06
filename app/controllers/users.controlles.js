@@ -13,5 +13,3 @@ exports.getUsers = (req, res, next) =>{
         next(err)
     })
 }
-Rookswood135$
-postgresql://postgres:[YOUR-PASSWORD]@db.zgkddvmwhphxgazyblzh.supabase.co:5432/postgres
