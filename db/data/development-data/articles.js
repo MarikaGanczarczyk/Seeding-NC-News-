@@ -31,7 +31,7 @@ module.exports = [
   },
   {
     title: "Making sense of Redux",
-    topic: "coding",
+    topic: "coding", console.log(articles, " <----");
     author: "jessjelly",
     body: "When I first started learning React, I remember reading lots of articles about the different technologies associated with it. In particular, this one article stood out. It mentions how confusing the ecosystem is, and how developers often feel they have to know ALL of the ecosystem before using React. And as someone who’s used React daily for the past 8 months or so, I can definitely say that I’m still barely scratching the surface in terms of understanding how the entire ecosystem works! But my time spent using React has given me some insight into when and why it might be appropriate to use another technology — Redux (a variant of the Flux architecture).",
     created_at: 1599858720000,

@@ -47,7 +47,8 @@ exports.selectArticles = (sort_by = "created_at", order = "desc", topic) => {
       queryValue.push(topic)
       queryStr += `WHERE articles.topic = $1`;
     }
-    queryStr += `GROUP BY articles.article_id
+    queryStr += `
+    GROUP BY articles.article_id
     ORDER BY ${sort_by} ${order}`
 
   return db.query(queryStr, queryValue).then((result) => {
