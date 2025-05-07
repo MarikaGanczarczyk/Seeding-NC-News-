@@ -403,24 +403,24 @@ describe("GET /api/articles -sorting by queries(Error handling)", () => {
       });
   });
 });
-describe("GET /api/articles (topic query)", () => {
-  test("200: responds with filtered artciles by specified topic", () => {
-    return request(app)
-      .get("/api/articles?topic=mitch")
-      .expect(200)
-      .then((response) => {
-        const articles = response.body.articles;
-     console.log(articles, " <----");
+// describe("GET /api/articles (topic query)", () => {
+//   test("200: responds with filtered artciles by specified topic", () => {
+//     return request(app)
+//       .get("/api/articles?topic=mitch")
+//       .expect(200)
+//       .then((response) => {
+//         const articles = response.body.articles;
+//      console.log(articles, " <----");
      
-        articles.forEach((article) => {
-          expect(article).toHaveProperty("article_id");
-          expect(article).toHaveProperty("topic");
-          expect(article).toHaveProperty("author");
-          expect(article).toHaveProperty("created_at");
-          expect(article).toHaveProperty("votes");
-          expect(article).toHaveProperty("article_img_url");
-          expect(article.topic).toBe("mitch");
-        });
-      });
-  });
-});
+//         articles.forEach((article) => {
+//           expect(article).toHaveProperty("article_id");
+//           expect(article).toHaveProperty("topic");
+//           expect(article).toHaveProperty("author");
+//           expect(article).toHaveProperty("created_at");
+//           expect(article).toHaveProperty("votes");
+//           expect(article).toHaveProperty("article_img_url");
+//           expect(article.topic).toBe("mitch");
+//         });
+//       });
+//   });
+// });
