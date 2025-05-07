@@ -3,7 +3,11 @@ const db = require("../../db/connection");
 exports.selectArticleById = (article_id) => {
   return db
 
-    .query(`SELECT * FROM articles WHERE article_id = $1`, [article_id])
+    .query(`SELECT articles.article_id, articles.title, articles.topic, articles.body, articles.author, articles.created_at, articles.votes, articles.article_img_url,
+      COUNT(comments.comment_id)::INT AS comment_count FROM articles
+      LEFT JOIN comments on comments.article_id = articles.article_id
+      WHERE articles.article_id = $1
+      GROUP BY articles.article_id`, [article_id])
     .then((result) => {
       if (result.rows.length === 0) {
         return Promise.reject({
@@ -47,7 +51,8 @@ exports.selectArticles = (sort_by = "created_at", order = "desc", topic) => {
       queryValue.push(topic)
       queryStr += `WHERE articles.topic = $1`;
     }
-    queryStr += `GROUP BY articles.article_id
+    queryStr += `
+    GROUP BY articles.article_id
     ORDER BY ${sort_by} ${order}`
 
   return db.query(queryStr, queryValue).then((result) => {
