@@ -5,6 +5,9 @@ const {getArticlesID, getArticles,getCommentsByArticleId, patchArticles}= requir
 const {postComment, deleteComment} = require("./app/controllers/comments.controller");
 const { getUsers } = require("./app/controllers/users.controlles");
 const app = express();
+const cors = require('cors')
+
+app.use(cors())
 
 app.use(express.json());
 
