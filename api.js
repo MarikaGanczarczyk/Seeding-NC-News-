@@ -1,5 +1,5 @@
 const express = require("express");
-const db = require("./db/connection");
+
 const { getApi, getTopics } = require("./app/controllers/topics.controller");
 const {getArticlesID, getArticles,getCommentsByArticleId, patchArticles}= require("./app/controllers/articles.controller");
 const {postComment, deleteComment} = require("./app/controllers/comments.controller");
