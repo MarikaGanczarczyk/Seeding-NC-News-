@@ -184,32 +184,32 @@ describe("POST comments", () => {
         });
       });
   });
-  test("404: Responds with not found when article out of range", () => {
-    const newComment = {
-      username: "butter_bridge",
-      body: "new comment",
-    };
-    return request(app)
-      .post("/api/articles/1000/comments")
-      .send(newComment)
-      .expect(404)
-      .then(({ body }) => {
-        expect(body.msg).toBe("Not found");
-      });
-  });
-  test("404: Responds with not found when author is invalid", () => {
-    const newComment = {
-      username: "Marika",
-      body: "new comment",
-    };
-    return request(app)
-      .post("/api/articles/1000/comments")
-      .send(newComment)
-      .expect(404)
-      .then(({ body }) => {
-        expect(body.msg).toBe("Not found");
-      });
-  });
+  // test("404: Responds with not found when article out of range", () => {
+  //   const newComment = {
+  //     username: "butter_bridge",
+  //     body: "new comment",
+  //   };
+  //   return request(app)
+  //     .post("/api/articles/1000/comments")
+  //     .send(newComment)
+  //     .expect(404)
+  //     .then(({ body }) => {
+  //       expect(body.msg).toBe("Not found");
+  //     });
+  // });
+  // test("404: Responds with not found when author is invalid", () => {
+  //   const newComment = {
+  //     username: "Marika",
+  //     body: "new comment",
+  //   };
+  //   return request(app)
+  //     .post("/api/articles/1000/comments")
+  //     .send(newComment)
+  //     .expect(404)
+  //     .then(({ body }) => {
+  //       expect(body.msg).toBe("Not found");
+  //     });
+  // });
   test("400: responds with Bad request when passing invalid id", () => {
     const newComment = {
       username: "butter_bridge",

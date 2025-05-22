@@ -11,7 +11,7 @@ exports.postComment = (req, res, next) => {
 
     .catch((err) => {
       if (err.code === "23503") {
-        next({ status: 404, msg: "Not found" });
+        next({ status: 404, msg: {article_id, username, body} });
       }
 
       next(err);
